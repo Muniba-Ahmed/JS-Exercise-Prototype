@@ -108,8 +108,18 @@ Car.prototype.fill = function (gallons) {
   this.tank = this.tank + gallons;
 };
 
-Car.prototype.drive = function (distance) {};
-
+Car.prototype.drive = function (miles) {
+  const drivableMiles = this.milesPerGallon * this.tank;
+  if (drivableMiles <= miles) {
+    this.odometer = this.odometer + drivableMiles;
+    this.tank = 0;
+    return `I ran out of fuel at ${this.odometer} miles!`;
+  } else {
+    this.odometer = this.odometer + miles;
+    this.tank = this.tank - this.milePerGallon / miles;
+    return `I made it to my final destination!`;
+  }
+};
 /*
   TASK 3
     - Write a Baby constructor subclassing Person.
@@ -128,14 +138,20 @@ Baby.prototype.play = function (favoriteToy) {
   return `${this.name} can play with ${this.favoriteToy}.`;
 };
 
+const personTwo = new Baby("Laith", 1, "teddy bear");
+
+console.log("Task 3:", personTwo);
+console.log("Task 3:", Baby.prototype);
+console.log("Task 3:", personTwo.play());
+
 /* 
   TASK 4
   In your own words explain the four principles for the "this" keyword below:
   1. Principle 1-Window/Global Object Binding- When in the global scope the value of "his"
     is in the window/console object.
-  2. Principle 2- Implicit Binding-
-  3. Principle 3- New Binding-
-  4. Principle 4- Explicit Binding-
+  2. Principle 2- Implicit Binding- when the function is invoked, look to the left of the dot, thats what "this" is referring to
+  3. Principle 3- New Binding- when a function is invoked as a constructor function, using the "new" keyword, "this" keyword points to the new pbject that is created
+  4. Principle 4- Explicit Binding- when we explicity assigns the "this" keyword to .call() and .apply()-immediately invoke and .bind()
 */
 
 ///////// END OF CHALLENGE /////////
